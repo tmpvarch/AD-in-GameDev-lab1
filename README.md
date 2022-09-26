@@ -6,9 +6,9 @@
 
 | Задание | Выполнение | Баллы |
 | ------ | ------ | ------ |
-| Задание 1 | # | 60 |
-| Задание 2 | # | 20 |
-| Задание 3 | # | 20 |
+| Задание 1 | * | 60 |
+| Задание 2 | * | 20 |
+| Задание 3 | * | 20 |
 
 знак "*" - задание выполнено; знак "#" - задание не выполнено;
 
@@ -38,29 +38,17 @@
 Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
 ## Задание 1
 ### Написать программы Hello World на Python и Unity.
-Код:
-	1) Показ содержимого кода и его успешный запуск.
-	![image](https://user-images.githubusercontent.com/71095323/192280031-00a88975-676c-4eae-a9ef-cb627ac4258a.png)
-```
-Показ содержимого кода и его успешный запуск.
-```
-Сохранение на Google Drive:
+1) Показ содержимого кода и его успешный запуск:
+![image](https://user-images.githubusercontent.com/71095323/192280031-00a88975-676c-4eae-a9ef-cb627ac4258a.png)	
+2) Успешное сохранение ipynb-файла на Google Drive:
 ![image](https://user-images.githubusercontent.com/71095323/192280548-9316d71d-b01a-49c0-bba0-d57d93a6b235.png)
-```
-Успешное сохранение ipynb-файла на Google Drive.
-```
 
-# Hello World в Unity
-Вывод в Console:
+### Hello World в Unity
+1) Успешный запуск кода в Unity, вывод в Console:
 ![image](https://user-images.githubusercontent.com/71095323/192281487-977440ef-85a4-4f1b-8962-e8c188ca893b.png)
-```
-Успешный запуск кода в Unity.
-```
-Код:
+
+2) Показ содержимого кода:
 ![image](https://user-images.githubusercontent.com/71095323/192281582-02389f96-84c6-4c93-bd3e-55db7dc44bea.png)
-```
-Показ содержимого кода.
-```
 
 ## Задание 2
 ### Пошагово выполнить каждый пункт раздела "ход работы" с описанием и примерами реализации задач
@@ -86,73 +74,67 @@ y = np.array(y)
 plt.scatter(x,y)
 
 ```
+1) Показ кода и его запуск в PyCharm:
 ![image](https://user-images.githubusercontent.com/71095323/192297449-42292302-c0fc-4ac1-9bf4-d0a199951344.png)
-```
-Показ кода и его запуск.
-```
 
 - Определите связанные функции. Функция модели: определяет модель линейной регрессии wx+b. Функция потерь: функция потерь среднеквадратичной ошибки. Функция оптимизации: метод градиентного спуска для нахождения частных производных w и b.
+
+2) Показ связанных функций в PyCharm:
+
+![image](https://user-images.githubusercontent.com/71095323/192301068-6afdaf1f-03cb-4070-afac-f4955b6843ad.png)
+
+## 3) Начало итераций:
+
+#### Шаг 1: Инициализация и модель итеративной оптимизации.
+![image](https://user-images.githubusercontent.com/71095323/192308069-6e8e43c1-7f8d-4757-8a29-8fc0599ee7e7.png)
+
+#### Шаг 2: На второй итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации.
+![image](https://user-images.githubusercontent.com/71095323/192308191-fd3fcf96-5baa-48b4-b290-7555e813cff4.png)
+#### Шаг 3: Третья итерация показывает значения параметров, значения потерь и визуализацию после итерации.
+![image](https://user-images.githubusercontent.com/71095323/192308440-79265dfb-1aa6-4b95-b536-a7a9e8f96ccc.png)
+#### Шаг 4: На четвертой итерации отображаются значения параметров, значения потерь и эффекты визуализации.
+![image](https://user-images.githubusercontent.com/71095323/192308554-b9cc5452-5fc6-46dd-864b-486372de4671.png)
+#### Шаг 5: Пятая итерация показывает значение параметра, значение потерь и эффект визуализации после итерации.
+![image](https://user-images.githubusercontent.com/71095323/192308689-d363925b-4381-46da-a362-62491e068ccd.png)
+#### Шаг 6: 10000-я итерация, показывающая значения параметров, потери и визуализацию после итерации.
+![image](https://user-images.githubusercontent.com/71095323/192308751-e0e3fc87-bac0-40c3-bd8b-9325030c71b0.png)
 
 
 ## Задание 3
 ### Должна ли величина loss стремиться к нулю при изменении исходных данных? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ.
+В приведенном мной скриншоте можно заметить, что переменные a и b, которые вычисляют значение loss, имеют зависимость от параметра times. Можно сделать вывод о том, что чем больше значение параметра times в функции iterate, тем меньше будет значение loss. Следовательно, величина loss должна стремится к нулю.
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+![image](https://user-images.githubusercontent.com/71095323/192312208-a71afb80-86f8-41cb-b5fb-f32123287b22.png)
 
-```py
+### Примеры
+#### 1) При times = 1 значение loss будет составлять приблизительно ~2367:
+![image](https://user-images.githubusercontent.com/71095323/192310290-54e3e84b-93cc-40a4-8a30-4b012c79d1e2.png)
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+#### 2) При times = 234 значение loss приблизительно будет уже равняться ~887:
+![image](https://user-images.githubusercontent.com/71095323/192313835-31ab4dda-7505-4f05-a5ea-7b784536f349.png)
 
-```
+#### 3) А при times = 1232 значене loss будет эквивалентно приблизительно ~192:
+![image](https://user-images.githubusercontent.com/71095323/192313996-05d4b81e-dfda-4754-b3f4-af71fae6a6c2.png)
+
 
 ## Задание 3
 ### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
+Роль параметра Lr заключается в том, что его значение влияет на угол прямой, изображенной на графике.
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+### Примеры (Во всех примерах times = 1)
+#### 1) lr = 0.000001:
+![image](https://user-images.githubusercontent.com/71095323/192315094-968b86ad-af9e-48ca-9dbc-5653a8b71a09.png)
 
-```py
+#### 2) lr = 0.00001:
+![image](https://user-images.githubusercontent.com/71095323/192315383-c78b9d87-e9d1-4158-b790-6d35b7a29d78.png)
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+#### 3) lr = 0.001:
+![image](https://user-images.githubusercontent.com/71095323/192315570-75262c0a-64cb-44f4-87de-d0bfca86b477.png)
 
-```
 
 ## Выводы
 
-Абзац умных слов о том, что было сделано и что было узнано.
+Вывод: Я ознакомился с основными операторами языка Python на примере реализации линейной регрессии. В ходе лабораторной работы я выяснил зависимость в работе кода от таких параметров, как Lr и times. Также я разобрался в работе с кодом в Google Colab и Unity в связке с Visual Studio Code.
 
 | Plugin | README |
 | ------ | ------ |
