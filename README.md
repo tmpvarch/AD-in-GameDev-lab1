@@ -63,7 +63,7 @@ ____
 * Создание плоскоти, куба, сферы
 
 ![image](https://user-images.githubusercontent.com/71095323/197334128-bc03b0e1-be79-43d3-9efc-069c524c869c.png)
-
+____
 * Добавление C#-скрипта к сфере
  
 ![image](https://user-images.githubusercontent.com/71095323/197334173-e85550ec-cfc5-4868-83dd-870515e3b7bd.png)
@@ -124,11 +124,11 @@ public class RollerAgent : Agent
     }
 }
 ```
+____
 * Добавление и настройка компонентов для сферы
 
 ![image](https://user-images.githubusercontent.com/71095323/197334472-a30e44b4-17d9-4b15-948d-9284284ad968.png)
-
-
+____
 * Добавление файла конфигурации нейронной сети в директорию проекта
 
 ![image](https://user-images.githubusercontent.com/71095323/197334606-f7071c75-cc59-4f16-902a-2e38e7983050.png)
@@ -159,13 +159,12 @@ behaviors:
     time_horizon: 64
     summary_freq: 10000
 ```
-
 ### 4. Запуск сцены в Unity
 
 * Запуск файла rollerball_config.yaml
 
 ![image](https://user-images.githubusercontent.com/71095323/197334764-ededfa65-89eb-4e41-be02-0c9be2d1752d.png)
-
+____
 * Проверка работы ML-агента
 
 ![image](https://user-images.githubusercontent.com/71095323/197334821-12030fdb-3cd9-4943-84b0-23bda2a2e938.png)
@@ -174,7 +173,7 @@ ____
 * Запуск сцены с **9** копиями модели "Плоскость-Сфера-Куб" и результаты данного запуска
 
 ![image](https://user-images.githubusercontent.com/71095323/197334940-c712db99-1826-4e46-bf99-88f08b30acfe.png)
-
+____
 * Запуск сцены с **36** копиями модели "Плоскость-Сфера-Куб" и резульататы данного запуска
 
 ![image](https://user-images.githubusercontent.com/71095323/197335017-9eb3eb54-8fc6-444c-a02c-17804f9c2bd2.png)
@@ -183,7 +182,6 @@ ____
 * Присваивание сферы модели работы и результат данной модели
 
 ![image](https://user-images.githubusercontent.com/71095323/197335071-b375e545-3f76-41fe-8e63-e57a15116632.png)
-
 
 ## Задание 2
 ### Подробно опишите каждую строку файла конфигурации нейронной сети, доступного в папке с файлами проекта по ссылке. Самостоятельно найдите информацию о компонентах Decision Requester, Behavior Parameters, добавленных на сфере.
