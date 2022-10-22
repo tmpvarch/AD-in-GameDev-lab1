@@ -75,7 +75,6 @@ public class RollerAgent : Agent
         sensor.AddObservation(this.transform.localPosition);
         sensor.AddObservation(rBody.velocity.x);
         sensor.AddObservation(rBody.velocity.z);
-
     }
 
     public float forceMultiplier = 10;
