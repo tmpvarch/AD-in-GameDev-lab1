@@ -184,6 +184,7 @@ ____
 
 ![image](https://user-images.githubusercontent.com/71095323/197335071-b375e545-3f76-41fe-8e63-e57a15116632.png)
 
+> Здесь видно, что нейросеть достаточно успешно справилась в управлении сферой.
 https://user-images.githubusercontent.com/71095323/197336355-7e3ecccc-9a2f-4f5a-be80-ef4447bf66cc.mp4
 
 
