@@ -37,11 +37,38 @@
 ## Цель работы
 Познакомиться с программными средствами для создания системы машинного обучения и ее интеграции в Unity.
 ## Задание 1
-### ! В методических указаниях по какой-то причине указана формилровка задачи из лабороторной работы №2 !
+### ! В методических указаниях по какой-то причине указана формилровка первой задачи из лабороторной работы №2 !
 
+### 1. Создание проекта в Unity и успешное добавление .json-файлов в данный проект
+> Убеждаемся в том, что во вкладке Components появилась строка ML Agent.
+![image](https://user-images.githubusercontent.com/71095323/197333387-251cc02f-c3cb-4127-999c-ee394571c05c.png)
+____
+### 2. ML-Агент и установка необходимых библиотек через Anaconda Prompt
+* Создание ML-агента библиотек
 
+![image](https://user-images.githubusercontent.com/71095323/197333574-903fe170-9a8a-4b73-a5bd-590574b969a4.png)
+____
+* Активация МГ-агента и последующая установка библиотек **mlagents 0.28.0** и **torch 1.7.1**
 
+> ***Процесс успешной загрузки mlagents 0.28.0:***     
 
+![image](https://user-images.githubusercontent.com/71095323/197333656-f231d0d1-ad6d-4cbc-9bfc-93d6bfc15527.png)
+____
+> ***Успешная загрузка torch 1.7.1:***
+
+![image](https://user-images.githubusercontent.com/71095323/197333849-6b913d70-c65c-4808-9ae7-89d9fb1e5591.png)
+
+____
+### 3. Подготовка сцены в Unity
+* Создание плоскоти, куба, сферы
+
+![image](https://user-images.githubusercontent.com/71095323/197334128-bc03b0e1-be79-43d3-9efc-069c524c869c.png)
+
+* Добавление C#-скрипта к сфере
+ 
+![image](https://user-images.githubusercontent.com/71095323/197334173-e85550ec-cfc5-4868-83dd-870515e3b7bd.png)
+
+> ***Содержимое файла RollerAgent.cs:***
 ```C#
 using System.Collections;
 using System.Collections.Generic;
@@ -97,7 +124,16 @@ public class RollerAgent : Agent
     }
 }
 ```
+* Добавление и настройка компонентов для сферы
 
+![image](https://user-images.githubusercontent.com/71095323/197334472-a30e44b4-17d9-4b15-948d-9284284ad968.png)
+
+
+* Добавление файла конфигурации нейронной сети в директорию проекта
+
+![image](https://user-images.githubusercontent.com/71095323/197334606-f7071c75-cc59-4f16-902a-2e38e7983050.png)
+
+> ***Содержимое файла rollerball_config.yaml:***
 ```yaml
 behaviors:
   RollerBall:
@@ -123,6 +159,20 @@ behaviors:
     time_horizon: 64
     summary_freq: 10000
 ```
+
+### 4. Запуск сцены в Unity
+
+* Запуск файла rollerball_config.yaml
+
+![image](https://user-images.githubusercontent.com/71095323/197334764-ededfa65-89eb-4e41-be02-0c9be2d1752d.png)
+
+* Проверка работы ML-агента
+
+![image](https://user-images.githubusercontent.com/71095323/197334821-12030fdb-3cd9-4943-84b0-23bda2a2e938.png)
+____
+
+
+
 
 ## Задание 2
 ### Подробно опишите каждую строку файла конфигурации нейронной сети, доступного в папке с файлами проекта по ссылке. Самостоятельно найдите информацию о компонентах Decision Requester, Behavior Parameters, добавленных на сфере.
