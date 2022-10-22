@@ -159,6 +159,7 @@ behaviors:
     time_horizon: 64
     summary_freq: 10000
 ```
+____
 ### 4. Запуск сцены в Unity
 
 * Запуск файла rollerball_config.yaml
@@ -182,6 +183,9 @@ ____
 * Присваивание сферы модели работы и результат данной модели
 
 ![image](https://user-images.githubusercontent.com/71095323/197335071-b375e545-3f76-41fe-8e63-e57a15116632.png)
+
+https://user-images.githubusercontent.com/71095323/197336355-7e3ecccc-9a2f-4f5a-be80-ef4447bf66cc.mp4
+
 
 ## Задание 2
 ### Подробно опишите каждую строку файла конфигурации нейронной сети, доступного в папке с файлами проекта по ссылке. Самостоятельно найдите информацию о компонентах Decision Requester, Behavior Parameters, добавленных на сфере.
