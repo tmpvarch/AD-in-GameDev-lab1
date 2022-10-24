@@ -235,12 +235,161 @@ behaviors:
 ## Задание 3
 ### Доработайте сцену и обучите ML-Agent таким образом, чтобы шар перемещался между двумя кубами разного цвета. Кубы должны, как и в первом задании, случайно изменять координаты на плоскости.
 
+Для доработки сцены потребуется добавить еще один куб на плоскость и написать новый скрипт для шара. Представлен он в таком виде:
 
+> Содержимое файла move.cs
+
+```C#
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
+using Unity.MLAgents.Actuators;
+
+public class Move : Agent
+{
+    [SerializeField] private GameObject goldMine;
+    [SerializeField] private GameObject village;
+    private float speedMove;
+    private float timeMining;
+    private float month;
+    private bool checkMiningStart = false;
+    private bool checkMiningFinish = false;
+    private bool checkStartMonth = false;
+    private bool setSensor = true;
+    private float amountGold;
+    private float pickaxeСost;
+    private float profitPercentage;
+    private float[] pricesMonth = new float[2];
+    private float priceMonth;
+    private float tempInf;
+
+    public override void OnEpisodeBegin()
+    {
+        if (this.transform.localPosition != village.transform.localPosition)
+        {
+            this.transform.localPosition = village.transform.localPosition;
+        }
+        checkMiningStart = false;
+        checkMiningFinish = false;
+        checkStartMonth = false;
+        setSensor = true;
+        priceMonth = 0.0f;
+        pricesMonth[0] = 0.0f;
+        pricesMonth[1] = 0.0f;
+        tempInf = 0.0f;
+        month = 1;
+    }
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        sensor.AddObservation(speedMove);
+        sensor.AddObservation(timeMining);
+        sensor.AddObservation(amountGold);
+        sensor.AddObservation(pickaxeСost);
+        sensor.AddObservation(profitPercentage);
+    }
+
+    public override void OnActionReceived(ActionBuffers actionBuffers)
+    {
+        if (month < 3 || setSensor == true)
+        {
+            speedMove = Mathf.Clamp(actionBuffers.ContinuousActions[0], 1f, 10f);
+            Debug.Log("SpeedMove: " + speedMove);
+            timeMining = Mathf.Clamp(actionBuffers.ContinuousActions[1], 1f, 10f);
+            Debug.Log("timeMining: " + timeMining);
+            setSensor = false;
+            if (checkStartMonth == false)
+            {
+                Debug.Log("Start Coroutine StartMonth");
+                StartCoroutine(StartMonth());
+            }
+
+            if (transform.position != goldMine.transform.position & checkMiningFinish == false)
+                transform.position = Vector3.MoveTowards(transform.position, goldMine.transform.position,
+                Time.deltaTime * speedMove);
+
+            if (transform.position == goldMine.transform.position & checkMiningStart == false)
+            {
+                Debug.Log("Start Coroutine StartGoldMine");
+                StartCoroutine(StartGoldMine());
+            }
+
+            if (transform.position != village.transform.position & checkMiningFinish == true)
+                transform.position = Vector3.MoveTowards(transform.position, village.transform.position,
+                Time.deltaTime * speedMove);
+
+            if (transform.position == village.transform.position & checkMiningStart == true)
+            {
+                checkMiningFinish = false;
+                checkMiningStart = false;
+                setSensor = true;
+                amountGold = Mathf.Clamp(actionBuffers.ContinuousActions[2], 1f, 10f);
+                Debug.Log("amountGold: " + amountGold);
+                pickaxeСost = Mathf.Clamp(actionBuffers.ContinuousActions[3], 100f, 1000f);
+                Debug.Log("pickaxeСost: " + pickaxeСost);
+                profitPercentage = Mathf.Clamp(actionBuffers.ContinuousActions[4], 0.1f, 0.5f);
+                Debug.Log("profitPercentage: " + profitPercentage);
+
+                if (month != 2)
+                {
+                    priceMonth = pricesMonth[0] + ((pickaxeСost + pickaxeСost * profitPercentage) / amountGold);
+                    pricesMonth[0] = priceMonth;
+                    Debug.Log("priceMonth: " + priceMonth);
+                }
+                if (month == 2)
+                {
+                    priceMonth = pricesMonth[1] + ((pickaxeСost + pickaxeСost * profitPercentage) / amountGold);
+                    pricesMonth[1] = priceMonth;
+                    Debug.Log("priceMonth: " + priceMonth);
+                }
+
+            }
+        }
+        else
+        {
+            tempInf = ((pricesMonth[1] - pricesMonth[0]) / pricesMonth[0]) * 100;
+            if (tempInf <= 6f)
+            {
+                SetReward(1.0f);
+                Debug.Log("True");
+                Debug.Log("tempInf: " + tempInf);
+                EndEpisode();
+            }
+            else
+            {
+                SetReward(-1.0f);
+                Debug.Log("False");
+                Debug.Log("tempInf: " + tempInf);
+                EndEpisode();
+            }
+        }
+    }
+
+    IEnumerator StartGoldMine()
+    {
+        checkMiningStart = true;
+        yield return new WaitForSeconds(timeMining);
+        Debug.Log("Mining Finish");
+        checkMiningFinish = true;
+    }
+
+    IEnumerator StartMonth()
+    {
+        checkStartMonth = true;
+        yield return new WaitForSeconds(60);
+        checkStartMonth = false;
+        month++;
+    }
+}
+```
+
+![image](https://user-images.githubusercontent.com/71095323/197583660-a3ce1c64-07d7-42aa-a727-774e9f29f60c.png)
 
 ## Выводы
-<!-- В выводах к работе дайте развернутый ответ, что такое игровой баланс и как
-системы машинного обучения могут быть использованы для того, чтобы его
-скорректировать. -->
+Я познакомился с программными средствами для создания системы машинного обучения и ее интеграции в Unity.
+
+**Игровой баланс** - это равновесие между сложностью игры и получаемого от неё удовольствия и веселья. Благодаря такому равонвесию игра будет ощущаться цельной и играбельной. Но для достижения максимально возможного игрового баланса требуется огромное количество времени и плейтестов. С другой стороны существует машинное обучение, которое может предоставить помощь по настройке игрового баланса. Ведь достаточно воспользоваться простой нейронной сетью, которая будет адаптировать игровые условности за счёт обучения агентов, которые выполняют роль тестировщика, и выявлять источники дисбаланса, значительно упрощая разработчикам работу с совершенствованием баланса игры. 
 
 | Plugin | README |
 | ------ | ------ |
