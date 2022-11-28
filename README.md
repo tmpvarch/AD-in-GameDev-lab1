@@ -35,7 +35,7 @@
 - ✨Magic ✨
 
 ## Цель работы
-### Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
+### Изучить работу прецептрона на примере проекта Unity и его решения логических операций.
 
 ## Задание 1
 ### В проекте Unity реализовать перцептрон, который умеет производить вычисления: OR, AND, NAND, XOR.
@@ -138,7 +138,6 @@ public class Perceptron : MonoBehaviour
 
 	}
 }
-
 ```
 
 > Пустому GameObject добавляем компонент Script. В качестве скрипта будет учавствовать файл **Perceptron.cs**. Указываем параметру Elements по 4, где указываем Input по 2. В поля Input и Output приписываем логику OR.
@@ -165,8 +164,8 @@ ____
 ### 3. Обучение логике NAND.
 
 > Задаем игровому объекту значения Input и Output по принципу логики NAND и запускаем сцену с ```Train(4)```.
-![image](https://user-images.githubusercontent.com/71095323/204194339-984b556c-37b1-4800-aa7d-4c0602aa1deb.png)
-![image](https://user-images.githubusercontent.com/71095323/204194382-160c2106-689c-4edc-9b59-caa988529b3a.png)
+![image](https://user-images.githubusercontent.com/71095323/204201347-2c7f2c1c-eb3a-4ff2-90a3-c1faf5f801cc.png)
+![image](https://user-images.githubusercontent.com/71095323/204201397-9072a26d-aa00-483b-9d0f-2805f0626180.png)
 
 Из приложенного сверху скриншота видно, что игровой объект с легкостью и успехом обучился логике NAND за четыре итерации, подтвеждая сообщением в консоли ```TOTAL ERROR: 0```.
 
@@ -179,10 +178,68 @@ ____
 
 Спустя несколько запусков игровой объект не может успешно обучиться данной логике. Результаты тестов оказываются некорректными, а количество ошибок порой равняеться 4. Из этого следует, что программы однослойного перцептрона не достаточно для работы с логикой XOR.
 
-Как один из вариантов, здесь можно дополнить код, чтобы он мог корректно работать для данной логики.
+Как один из вариантов решения конркетнной проблемы, здесь можно дополнить код по формуле ```X XOR Y = (X OR Y) AND (X NAND Y)```, чтобы он мог корректно работать для данной логики. Для этого внесём в файл **Perceptron.cs** данные изменения:
+```C#
+public TrainingSet[] modelOR;
+public TrainingSet[] modelNAND;
 
+double CalcOutput(int i, TrainingSet[] set)
+{
+	double dp = DotProductBias(weights,set[i].input);
+	if(dp > 0) return(1);
+	return (0);
+}
 
+void UpdateWeights(int j, TrainingSet[] set)
+{
+	double error = set[j].output - CalcOutput(j, set);
+	totalError += Mathf.Abs((float)error);
+	for(int i = 0; i < weights.Length; i++)		
+		weights[i] = weights[i] + error * set[j].input[i];
+	bias += error;
+}
 
+void Train(int epochs, TrainingSet[] set)
+{
+	InitialiseWeights();
+	for(int e = 0; e < epochs; e++)
+	{
+		totalError = 0;
+		for(int t = 0; t < set.Length; t++)
+		{
+			UpdateWeights(t, set);
+			Debug.Log("W1: " + (weights[0]) + " W2: " + (weights[1]) + " B: " + bias);
+		}
+		Debug.Log("TOTAL ERROR: " + totalError);
+	}
+}
+
+void Start ()
+{
+	Train(8, modelOR);
+	double modelOr0 = CalcOutput(0,0);
+	double modelOr1 = CalcOutput(0,1);
+	double modelOr2 = CalcOutput(1,0);
+	double modelOr3 = CalcOutput(1,1);
+
+	Train(8, modelNAND);
+	double modelNAND0 = CalcOutput(0,0);
+	double modelNAND1 = CalcOutput(0,1);
+	double modelNAND2 = CalcOutput(1,0);
+	double modelNAND3 = CalcOutput(1,1);
+
+	Train(8, ts);
+	Debug.Log("Test 0 0: " + CalcOutput(modelOr0, modelNAND0));
+	Debug.Log("Test 0 1: " + CalcOutput(modelOr1, modelNAND1));
+	Debug.Log("Test 1 0: " + CalcOutput(modelOr2, modelNAND2));
+	Debug.Log("Test 1 1: " + CalcOutput(modelOr3, modelNAND3));		
+}
+```
+> Дополнение параметров у игрового объекта и повторный запуск сцены с новым вариантом кода файла **Perceptron.cs**.
+![image](https://user-images.githubusercontent.com/71095323/204209262-66be259a-1ece-4557-8c4a-4e6f7ef49a24.png)
+![image](https://user-images.githubusercontent.com/71095323/204209823-eecfaae6-561e-4619-9cec-da323e7228f7.png)
+
+После внесений изменений в код игровой объект смог успешно обучится данной логике и мы получили корректные результаты тестирования.
 
 ## Задание 2
 ### Построить графики зависимости количества эпох от ошибки обучения. Указать от зависит необходимое количество эпох обучения.
