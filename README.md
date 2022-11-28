@@ -40,9 +40,153 @@
 ## Задание 1
 ### В проекте Unity реализовать перцептрон, который умеет производить вычисления: OR, AND, NAND, XOR.
 
+### 1. Создание и подготовка проекта. Обучение логики OR.
+
+> В Assets закидываем файл **Perceptron.cs**, на сцене создаём пустой GameObject.
+![image](https://user-images.githubusercontent.com/71095323/204189422-21c526e5-6ec3-438e-82df-7117d6493890.png)
+
+> Содержимое файла **Perceprton.cs**
+```C#
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class TrainingSet
+{
+	public double[] input;
+	public double output;
+}
+
+public class Perceptron : MonoBehaviour
+{
+	public TrainingSet[] ts;
+	double[] weights = {0,0};
+	double bias = 0;
+	double totalError = 0;
+
+	double DotProductBias(double[] v1, double[] v2) 
+	{
+		if (v1 == null || v2 == null)
+			return -1;
+		if (v1.Length != v2.Length)
+			return -1;
+		double d = 0;
+		for (int x = 0; x < v1.Length; x++)
+			d += v1[x] * v2[x];
+		d += bias;
+		return d;
+	}
+
+	double CalcOutput(int i)
+	{
+		double dp = DotProductBias(weights,ts[i].input);
+		if(dp > 0) return(1);
+		return (0);
+	}
+
+	void InitialiseWeights()
+	{
+		for(int i = 0; i < weights.Length; i++)
+			weights[i] = Random.Range(-1.0f,1.0f);
+		bias = Random.Range(-1.0f,1.0f);
+	}
+
+	void UpdateWeights(int j)
+	{
+		double error = ts[j].output - CalcOutput(j);
+		totalError += Mathf.Abs((float)error);
+		for(int i = 0; i < weights.Length; i++)	
+			weights[i] = weights[i] + error*ts[j].input[i]; 
+		bias += error;
+	}
+
+	double CalcOutput(double i1, double i2)
+	{
+		double[] inp = new double[] {i1, i2};
+		double dp = DotProductBias(weights,inp);
+		if(dp > 0) return(1);
+		return (0);
+	}
+
+	void Train(int epochs)
+	{
+		InitialiseWeights();
+		for(int e = 0; e < epochs; e++)
+		{
+			totalError = 0;
+			for(int t = 0; t < ts.Length; t++)
+			{
+				UpdateWeights(t);
+				Debug.Log("W1: " + (weights[0]) + " W2: " + (weights[1]) + " B: " + bias);
+			}
+			Debug.Log("TOTAL ERROR: " + totalError);
+		}
+	}
+
+	void Start ()
+	{
+		Train(8);
+		Debug.Log("Test 0 0: " + CalcOutput(0,0));
+		Debug.Log("Test 0 1: " + CalcOutput(0,1));
+		Debug.Log("Test 1 0: " + CalcOutput(1,0));
+		Debug.Log("Test 1 1: " + CalcOutput(1,1));		
+	}
+	
+	void Update ()
+	{
+
+	}
+}
+
+```
+
+> Пустому GameObject добавляем компонент Script. В качестве скрипта будет учавствовать файл **Perceptron.cs**. Указываем параметру Elements по 4, где указываем Input по 2. В поля Input и Output приписываем логику OR.
+![image](https://user-images.githubusercontent.com/71095323/204189728-2af10ad8-5e0c-4de5-9385-cef8b43c136a.png)
+
+> В **Perceptron.cs** задаем ```Train(1)``` и запускаем сцену.
+![image](https://user-images.githubusercontent.com/71095323/204190655-daedb711-9541-40e1-a152-8f9bfddfc946.png)
+
+Сообщение в коносли ```TOTAL ERROR: 0``` означает, что игровой объект допустил 0 ошибок при обучение, а это может говорить о том, что он с успехом обучился логике OR.
+____
+> Второй запуск сцены, но в файле **Perceptron.cs** задаём уже ```Train(4)```.
+![image](https://user-images.githubusercontent.com/71095323/204192111-504d9562-efda-465a-9390-d7be4f07fdfd.png)
+
+За четрые итерации игровой объект обучился данной логике, что можно понять по сообщению в консоли ```TOTAL ERROR: 0```.
+____
+### 2. Обучение логике AND.
+
+> Задаем игровому объекту значения Input и Output по принципу логики AND и запускаем сцену с ```Train(4)```.
+![image](https://user-images.githubusercontent.com/71095323/204193138-3dc56ff4-a530-4b54-aee2-527901fcf21b.png)
+![image](https://user-images.githubusercontent.com/71095323/204193675-70800c57-ee18-4849-af3a-176e340fd75e.png)
+
+По истечению четырх итераций игровой объект смог успешно обучиться логике AND, что можно понять по сообщение в коносли ```TOTAL ERROR: 0```.
+____
+### 3. Обучение логике NAND.
+
+> Задаем игровому объекту значения Input и Output по принципу логики NAND и запускаем сцену с ```Train(4)```.
+![image](https://user-images.githubusercontent.com/71095323/204194339-984b556c-37b1-4800-aa7d-4c0602aa1deb.png)
+![image](https://user-images.githubusercontent.com/71095323/204194382-160c2106-689c-4edc-9b59-caa988529b3a.png)
+
+Из приложенного сверху скриншота видно, что игровой объект с легкостью и успехом обучился логике NAND за четыре итерации, подтвеждая сообщением в консоли ```TOTAL ERROR: 0```.
+
+____
+### 4. Обучение логике XOR.
+
+> Задаем игровому объекту значения Input и Output по принципу логики XOR и запускаем сцену с ```Train(4)```.
+![image](https://user-images.githubusercontent.com/71095323/204196015-d280d1c6-0eca-4859-b700-60ca089f94e1.png)
+![image](https://user-images.githubusercontent.com/71095323/204196068-27e8bd47-2083-443b-b4cf-d41f2fd6c841.png)
+
+Спустя несколько запусков игровой объект не может успешно обучиться данной логике. Результаты тестов оказываются некорректными, а количество ошибок порой равняеться 4. Из этого следует, что программы однослойного перцептрона не достаточно для работы с логикой XOR.
+
+Как один из вариантов, здесь можно дополнить код, чтобы он мог корректно работать для данной логики.
+
+
+
 
 ## Задание 2
 ### Построить графики зависимости количества эпох от ошибки обучения. Указать от зависит необходимое количество эпох обучения.
+
 
 
 ## Выводы
