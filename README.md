@@ -37,6 +37,7 @@
 ## Задание 1
 ### 
 
+> Содержимое файла **Economic.yaml**
 ```yaml
 behaviors:
   Economic:
